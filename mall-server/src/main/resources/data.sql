@@ -1,0 +1,62 @@
+CREATE DATABASE mall;
+USE mall;
+
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL,
+    Password VARCHAR(255) NOT NULL, -- 密码字段长度要足够存储加密后的密码
+    Email VARCHAR(100),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Products (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description TEXT,
+    Price DECIMAL(10, 2) NOT NULL, -- 假设价格有两位小数
+    Stock INT NOT NULL,
+    ImageURL VARCHAR(255),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    Status ENUM('Placed', 'Paid', 'Shipped', 'Completed', 'Cancelled') NOT NULL,
+    OrderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE OrderDetails (
+    OrderDetailID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL,
+    UnitPrice DECIMAL(10, 2) NOT NULL,
+    Subtotal DECIMAL(10, 2) NOT NULL, -- Quantity * UnitPrice
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+CREATE TABLE Carts (
+    CartID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+CREATE TABLE Payments (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    Amount DECIMAL(10, 2) NOT NULL,
+    Method ENUM('CreditCard', 'EWallet', 'BankTransfer') NOT NULL,
+    Status ENUM('Pending', 'Completed', 'Failed') NOT NULL,
+    PaymentTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);

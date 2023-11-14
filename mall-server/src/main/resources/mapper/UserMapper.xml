@@ -1,0 +1,17 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mallserver.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="com.example.mallserver.UserEntity">
+        <id property="userId" column="UserID"/>
+        <result property="username" column="Username"/>
+        <result property="password" column="Password"/>
+        <result property="email" column="Email"/>
+        <result property="createdAt" column="CreatedAt"/>
+        <result property="updatedAt" column="UpdatedAt"/>
+    </resultMap>
+
+    <select id="getAllUsers" resultType="string">
+        SELECT username FROM users
+    </select>
+
+    <!-- 其他CRUD操作 -->
+</mapper>
