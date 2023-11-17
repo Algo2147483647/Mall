@@ -1,10 +1,12 @@
 package com.example.mallserver;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class UserEntity {
     private Integer userId;
     private String username;

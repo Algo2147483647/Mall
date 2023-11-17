@@ -100,6 +100,12 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <!-- Jedis client (you can also use Lettuce as the Redis client) -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+
         <!-- Jackson Databind (for serialization) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
