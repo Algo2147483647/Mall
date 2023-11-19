@@ -43,3 +43,12 @@ logging:
     root: INFO   # 默认日志级别
     com.example.mallserver: DEBUG  # 为您的应用程序设置DEBUG日志级别
     org.springframework: DEBUG    # 为Spring框架设置DEBUG日志级别
+
+sa-token:
+  token-name: token
+  timeout: 2592000
+  activity-timeout: -1
+  allow-concurrent-login: true
+  is-share: false
+  token-style: uuid
+  isReadCookie: false

@@ -78,7 +78,7 @@ public class UserService {
         }
 
         Date now = Date.from(Instant.now());
-        user.setUpdatedAt(now);
+        currentUser.setUpdatedAt(now);
 
         if(userMapper.updateUser(currentUser) == 0) {
             log.info("error: update user with id: {}", id);
