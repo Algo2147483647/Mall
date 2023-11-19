@@ -3,9 +3,12 @@ package com.example.mallserver;
 import com.example.mallserver.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -50,10 +53,34 @@ public class UserService {
 
     @Transactional
     public void updateUser(long id, UserEntity user) {
-        Date now = new Date();
+        UserEntity currentUser = userMapper.getUserById(id);
+
+        if (currentUser == null) {
+            log.info("error: User with id {} not found.", id);
+            throw new NoSuchElementException("User with id " + id + " not found.");
+        }
+
+        Field[] fields = user.getClass().getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true); // 使得私有字段也可以被访问
+            try {
+                Object value = field.get(user);
+                if (value != null) {
+                    Field userField = UserEntity.class.getDeclaredField(field.getName());
+                    userField.setAccessible(true);
+                    userField.set(currentUser, value);
+                }
+            } catch (IllegalAccessException | NoSuchFieldException e) {
+                // 处理异常：可能是字段不可访问或User类中不存在对应字段
+                e.printStackTrace();
+            }
+        }
+
+        Date now = Date.from(Instant.now());
         user.setUpdatedAt(now);
 
-        if(userMapper.updateUser(id, user) == 0) {
+        if(userMapper.updateUser(currentUser) == 0) {
             log.info("error: update user with id: {}", id);
             throw new NoSuchElementException("User with id " + id + " not found.");
         }

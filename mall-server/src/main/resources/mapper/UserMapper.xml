@@ -14,5 +14,11 @@
         VALUES (#{username}, #{password}, #{email}, #{createdAt}, #{updatedAt})
     </insert>
 
+    <update id="updateUser" parameterType="com.example.mallserver.UserEntity">
+        UPDATE users
+        SET Username = #{username}, Password = #{password}, Email = #{email}, UpdatedAt = #{updatedAt}
+        WHERE UserID = #{userId}
+    </update>
+
     <!-- 其他CRUD操作 -->
 </mapper>

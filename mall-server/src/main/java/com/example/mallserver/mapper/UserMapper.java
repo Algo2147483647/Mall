@@ -17,8 +17,7 @@ public interface UserMapper {
 
     void createUser(UserEntity user);
 
-    @Update("UPDATE users SET name = #{name}, email = #{email}, ... WHERE UserID = #{id}")
-    int updateUser(@Param("id") long id, UserEntity user);
+    int updateUser(UserEntity user);
 
     @Delete("DELETE FROM users WHERE UserID = #{id}")
     int deleteUser(@Param("id") long id);
