@@ -1,6 +1,6 @@
-package com.example.mallserver;
+package com.example.userserver;
 
-import com.example.mallserver.mapper.UserMapper;
+import com.example.userserver.mapper.UserMapper;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;

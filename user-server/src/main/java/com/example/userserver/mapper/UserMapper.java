@@ -1,9 +1,9 @@
-package com.example.mallserver.mapper;
+package com.example.userserver.mapper;
 
-import com.example.mallserver.UserEntity;
+import com.example.userserver.UserEntity;
 import org.apache.ibatis.annotations.*;
-
 import java.util.List;
+
 @Mapper
 public interface UserMapper {
     @Select("SELECT * FROM users")

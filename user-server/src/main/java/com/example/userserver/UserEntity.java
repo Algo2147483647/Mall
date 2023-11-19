@@ -1,4 +1,4 @@
-package com.example.mallserver;
+package com.example.userserver;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mallserver.mapper.UserMapper">
-    <resultMap id="UserResultMap" type="com.example.mallserver.UserEntity">
+<mapper namespace="com.example.userserver.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="com.example.userserver.UserEntity">
         <id property="userId" column="UserID"/>
         <result property="username" column="Username"/>
         <result property="password" column="Password"/>
@@ -9,12 +9,12 @@
         <result property="updatedAt" column="UpdatedAt"/>
     </resultMap>
 
-    <insert id="createUser" parameterType="com.example.mallserver.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="createUser" parameterType="com.example.userserver.UserEntity" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO users (Username, Password, Email, CreatedAt, UpdatedAt)
         VALUES (#{username}, #{password}, #{email}, #{createdAt}, #{updatedAt})
     </insert>
 
-    <update id="updateUser" parameterType="com.example.mallserver.UserEntity">
+    <update id="updateUser" parameterType="com.example.userserver.UserEntity">
         UPDATE users
         SET Username = #{username}, Password = #{password}, Email = #{email}, UpdatedAt = #{updatedAt}
         WHERE UserID = #{userId}

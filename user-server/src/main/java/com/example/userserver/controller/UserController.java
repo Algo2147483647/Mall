@@ -1,9 +1,9 @@
-package com.example.mallserver.controller;
+package com.example.userserver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.example.mallserver.UserEntity;
-import com.example.mallserver.UserService;
+import com.example.userserver.UserEntity;
+import com.example.userserver.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
