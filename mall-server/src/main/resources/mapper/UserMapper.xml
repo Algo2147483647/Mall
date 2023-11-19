@@ -9,9 +9,10 @@
         <result property="updatedAt" column="UpdatedAt"/>
     </resultMap>
 
-    <select id="getAllUsers" resultType="string">
-        SELECT username FROM users
-    </select>
+    <insert id="createUser" parameterType="com.example.mallserver.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO users (Username, Password, Email, CreatedAt, UpdatedAt)
+        VALUES (#{username}, #{password}, #{email}, #{createdAt}, #{updatedAt})
+    </insert>
 
     <!-- 其他CRUD操作 -->
 </mapper>

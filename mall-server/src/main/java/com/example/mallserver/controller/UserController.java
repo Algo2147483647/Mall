@@ -2,6 +2,7 @@ package com.example.mallserver.controller;
 
 import com.example.mallserver.UserEntity;
 import com.example.mallserver.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public List<String> getAllUsers() {
+    @GetMapping("/")
+    public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
+    public ResponseEntity<UserEntity> createUser(@RequestBody @Valid UserEntity user) {
         UserEntity createdUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }

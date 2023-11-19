@@ -6,13 +6,15 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 @Mapper
 public interface UserMapper {
-    List<String> getAllUsers();
+    @Select("SELECT * FROM users")
+    List<UserEntity> getAllUsers();
 
     @Select("SELECT * FROM users WHERE UserID = #{id}")
     UserEntity getUserById(@Param("id") long id);
 
-    @Insert("INSERT INTO users(name, email, ...) VALUES(#{name}, #{email}, ...)")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Select("SELECT COUNT(*) FROM users WHERE email = #{email}")
+    boolean existsByEmail(String email);
+
     void createUser(UserEntity user);
 
     @Update("UPDATE users SET name = #{name}, email = #{email}, ... WHERE UserID = #{id}")

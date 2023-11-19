@@ -5,6 +5,9 @@ import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.NoSuchElementException;
@@ -21,8 +24,8 @@ public class UserService {
     public UserService(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
-    @Cacheable(value = "usersCache", key = "'allUsers'")
-    public List<String> getAllUsers() {
+
+    public List<UserEntity> getAllUsers() {
         return userMapper.getAllUsers();
     }
 
@@ -33,12 +36,23 @@ public class UserService {
 
     @Transactional
     public UserEntity createUser(UserEntity user) {
+        if (userMapper.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("该邮箱已被注册。");
+        }
+
+        Date now = Date.from(Instant.now());
+        user.setCreatedAt(now);
+        user.setUpdatedAt(now);
+
         userMapper.createUser(user);
         return user;
     }
 
     @Transactional
     public void updateUser(long id, UserEntity user) {
+        Date now = new Date();
+        user.setUpdatedAt(now);
+
         if(userMapper.updateUser(id, user) == 0) {
             log.info("error: update user with id: {}", id);
             throw new NoSuchElementException("User with id " + id + " not found.");
